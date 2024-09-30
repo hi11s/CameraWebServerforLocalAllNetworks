@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Client</title>
+    </head>
+    <body>
+        <img src="">
+        <script>
+            const img = document.querySelector('img');
+            const WS_URL =''; //<-- local IP Address here
+            const ws = new WebSocket(WS_URL);
+            let urlObject;
+            ws.onopen = () => console.log('Connected to... ', {WS_URL});
+            ws.onmessage = message => {
+                const arrayButter = message.data;
+                if (urlObject) {
+                    URL.revokeObjectURL(urlObject);
+                } 
+                urlObject = URL.createObjectURL(new Blob([arrayButter]));
+                img.src = urlObject;
+            }
+        </script>
+    </body>
+</html>
